@@ -17,7 +17,7 @@ RUN mvn -f /app/pom.xml clean package
 # 选择运行时基础镜像
 FROM alpine:3.13
 
-ENV MYSQL_HOST 10.0.224.17
+ENV MYSQL_NAME 10.0.224.17
 ENV MYSQL_USER_NAME root
 ENV MYSQL_PASSWORD Mysql3306
 ENV DATABASE_NAME vex-music
