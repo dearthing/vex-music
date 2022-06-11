@@ -12,7 +12,7 @@ COPY src /app/src
 COPY pom.xml /app
 
 # 执行代码编译命令
-RUN mvn -f /app/pom.xml clean package
+RUN mvn -f /app/pom.xml clean package -Dspring.profiles.active=prod
 
 # 选择运行时基础镜像
 FROM alpine:3.13
@@ -21,6 +21,7 @@ ENV MYSQL_NAME 10.0.224.17
 ENV MYSQL_USER_NAME root
 ENV MYSQL_PASSWORD Mysql3306
 ENV DATABASE_NAME vex-music
+ENV APPLICATION_PORT 80
 
 # 安装依赖包，如需其他依赖包，请到alpine依赖包管理(https://pkgs.alpinelinux.org/packages?name=php8*imagick*&branch=v3.13)查找。
 RUN apk add --update --no-cache openjdk8-jre-base \
