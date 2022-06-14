@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
         Optional<User> optionalUser = userRepository.findByUsername(username);
         if (!optionalUser.isPresent()) {
-            throw new BizException(ExceptionType.USER_NAME_DUPLICATE);
+            throw new BizException(ExceptionType.USER_NOT_FOUND);
         }
         return optionalUser.get();
     }
