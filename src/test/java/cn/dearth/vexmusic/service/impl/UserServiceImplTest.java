@@ -1,29 +1,30 @@
-package cn.dearth.vexmusic.repository;
+package cn.dearth.vexmusic.service.impl;
 
 import cn.dearth.vexmusic.entity.User;
 import cn.dearth.vexmusic.enums.Gender;
+import cn.dearth.vexmusic.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 
 import java.util.Date;
+import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author dearth
  */
 @SpringBootTest
-class UserRepositoryTest {
+class UserServiceImplTest {
 
     @Autowired
-    UserRepository repository;
-
+    UserRepository userRepository;
 
 
     @Test
-    void getUserByUsername() {
-
+    void getUserByUsername(){
         User user = User.builder()
                 .username("Vex")
                 .nickname("lil Tiger")
@@ -34,13 +35,10 @@ class UserRepositoryTest {
                 .lastLoginTime(new Date())
                 .build();
 
-        // 由于save返回的user,返回的roles为null
-        User savedUser = repository.save(user);
+        userRepository.save(user);
 
-        User userVex = repository.getUserByUsername("Vex");
-
-        // 注意这个toString 并不会给出id
-        // 因为lombok的@Data注解重写的toString方法只有类上的属性
-        //todo System.out.println(userVex.toString());
     }
+
+
+
 }

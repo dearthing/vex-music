@@ -6,8 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -20,31 +25,58 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends AbstractEntity{
+public class User extends AbstractEntity implements UserDetails {
 
     @Column(unique = true)
     private String username;
 
-    private String nickname;
+    private String nickname = "vex";
 
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
                 inverseJoinColumns = @JoinColumn(name = "role_id",referencedColumnName = "id"))
-    private List<Role> roles;
+    private List<Role> roles; // todo 无法toString() 问题
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    private Boolean locked;
+    // todo 这里是验证创建用户接口
+    private Boolean locked = false;
 
-    private Boolean enabled;
+    private Boolean enabled = true;
 
     private String lastLoginIp;
 
     private Date lastLoginTime;
 
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        // todo 帐号过期逻辑添加
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        // todo 账号认证过期逻辑添加
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return getEnabled();
+    }
 }

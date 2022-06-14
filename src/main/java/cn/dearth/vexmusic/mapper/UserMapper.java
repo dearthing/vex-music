@@ -1,5 +1,6 @@
 package cn.dearth.vexmusic.mapper;
 
+import cn.dearth.vexmusic.dto.UserCreateDto;
 import cn.dearth.vexmusic.dto.UserDto;
 import cn.dearth.vexmusic.entity.User;
 import cn.dearth.vexmusic.vo.UserVo;
@@ -18,5 +19,8 @@ public interface UserMapper {
 
     // Dto转Vo输出给前端
     UserVo toVo(UserDto userDto);
+
+    // userCreateDto转UserDto
+    User createEntity(UserCreateDto userCreateDto);
 
 }

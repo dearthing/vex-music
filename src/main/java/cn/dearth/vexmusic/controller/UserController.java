@@ -1,11 +1,11 @@
 package cn.dearth.vexmusic.controller;
 
+import cn.dearth.vexmusic.dto.UserCreateDto;
 import cn.dearth.vexmusic.mapper.UserMapper;
 import cn.dearth.vexmusic.service.UserService;
 import cn.dearth.vexmusic.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,10 +21,16 @@ public class UserController {
 
     UserMapper userMapper;
 
-    @RequestMapping("/list")
+    @GetMapping("/")
     public List<UserVo> list(){
         return userService.list().stream().map(userMapper::toVo).collect(Collectors.toList());
     }
+
+    @PostMapping("/")
+    public UserVo create(@RequestBody UserCreateDto userCreateDto) {
+        return userMapper.toVo(userService.create(userCreateDto));
+    }
+
 
     @Autowired
     public void setUserService(UserService userService) {
